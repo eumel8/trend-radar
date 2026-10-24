@@ -343,9 +343,10 @@ def serve(db, config, port):
     HTTPServer(("127.0.0.1", port), Handler).serve_forever()
 
 
-def weekly(db, config, runtime):
-    selected = [i for i in entries(db) if i["state"] == "selected" and
-                i["language"].startswith("de-") and i["available"]]
+def weekly(db, config, runtime, selected_items=None):
+    selected = selected_items if selected_items is not None else [
+        i for i in entries(db) if i["state"] == "selected" and
+        i["language"].startswith("de-") and i["available"]]
     # One representative per channel + editorial series name.
     grouped = {}
     for item in selected:

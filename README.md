@@ -92,6 +92,48 @@ Sprache prüfen und bestätigen. Anderssprachig markierte Videos sind ausgeblend
 
 ## Redaktion und Wochenvideo
 
+### Automatische neue Inhalte und OpenAI-Moderation
+
+`automation.enabled = true` aktiviert die Auswahl neuer deutschsprachiger Formate.
+Der Worker berücksichtigt den konfigurierten Zeitraum, Mindestaufrufe sowie
+Einschluss-/Ausschlussmuster. Die bereinigte Beschreibung wird zusätzlich auf
+Gaming-/Kinder-/Gerüchtehinweise geprüft. Pro Sendung höchstens ein Video je Kanal.
+Kanäle, die bereits in einer hochgeladenen Sendung vorkamen, werden derzeit komplett
+ausgeschlossen. Das ist bewusst konservativ; spätere neue Staffeln desselben Kanals
+erfordern künftig eine feinere Serien-/Staffelzuordnung.
+
+Die Tabelle `featured` und historische `upload.json`/`episode.json`-Dateien verhindern
+Wiederholungen. Auswahl und Kandidaten werden als `selection.json` gespeichert.
+Die Gewichtung nutzt Reichweite und – wenn vorhanden – den gemessenen Zuwachs pro
+Stunde. Gibt es keine neuen passenden Treffer, entsteht kein Wiederholungsvideo.
+Die alten `selected`-Markierungen sind im Automatikmodus nicht maßgeblich.
+
+`ai.enabled = true` ruft OpenAI `gpt-4.1-mini` auf: erst Skriptentwurf, dann einen
+separaten redaktionellen Faktencheck gegen dieselben Quelldaten. Übermittelt werden
+öffentliche Titel, Kanalnamen, bereinigte Beschreibungen, Veröffentlichungsdaten,
+Messwerte und Auswahlgründe. Keine OAuth-Daten oder internen Redaktionsnotizen.
+Beschreibungen gelten im Prompt ausdrücklich als nicht vertrauenswürdige Quellen,
+nicht als Anweisungen. Das Modell hat die Originalvideos nicht angesehen.
+Diese Prüfung reduziert Fehler, garantiert aber keine fehlerfreie Inhaltsdarstellung;
+die private Videofassung bleibt vor Veröffentlichung redaktionell zu prüfen.
+
+JSON-Schema, IDs, Reihenfolge und Textlängen werden geprüft. Bei fehlendem API-Key,
+API-Fehlern oder ungültiger Antwort kommen feste Vorlagen mit gekürzter Beschreibung
+zum Einsatz (`fallback_templates = true`). Das geprüfte Skript, Provider, Modell und
+Tokenverbrauch werden als `ai-script.json` gespeichert und bei Wiederholungen
+wiederverwendet. Zwei API-Aufrufe pro neuer Sendung, maximal je 2400 Ausgabe-Token.
+Abrechnung erfolgt über das verwendete OpenAI-Projekt; hierfür kein ChatGPT-Abo nötig.
+
+Der Schlüssel steht ausschließlich im Kubernetes-Secret `trendsde-openai`, Feld
+`api-key`; nur der Videojob erhält `OPENAI_API_KEY`. `provision_secrets.py` übernimmt
+ihn optional aus dieser Umgebungsvariable. Keine zusätzlichen Python-Abhängigkeiten.
+Neue Editionsnamen erlauben bewusst getrennte private Testvideos; normale
+Wiederholungen derselben Woche/Edition laden nicht erneut hoch.
+
+Die neue KI-Version wurde für den Live-Test als temporäres Worker-Image in der
+vorhandenen eigenen Registry gebaut. Die Quellcode-Manifeste verwenden weiterhin
+GHCR `:main`; erst nach Veröffentlichung des neuen Codes dort wieder anwenden.
+
 ### Magazin-Gestaltung (aktuell)
 
 `video.style = "magazine"` aktiviert `magazine.py`: TrendsDE-Wortmarke in

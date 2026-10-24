@@ -102,6 +102,11 @@ spec:
               imagePullPolicy: Always
               args: [video]
               env:
+                - name: OPENAI_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: trendsde-openai
+                      key: api-key
                 - name: YOUTUBE_TOKEN_FILE
                   value: /credentials/token.json
               securityContext:

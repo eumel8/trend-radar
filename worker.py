@@ -7,6 +7,7 @@ from pathlib import Path
 import tomllib
 
 import radar
+import editor
 
 
 def main():
@@ -39,9 +40,15 @@ def main():
                     return
             # Reuse rendered files after a failed upload; don't lose fingerprint deduplication.
             if not (directory / "render.json").exists():
-                directory = radar.weekly(db, config, runtime)
+                if not (directory / "episode.json").exists():
+                    directory = (editor.select(db, config, runtime)
+                                 if config.get("automation", {}).get("enabled")
+                                 else radar.weekly(db, config, runtime))
+                if config.get("ai", {}).get("enabled"):
+                    editor.generate(directory, config)
                 radar.render(directory, config)
             radar.upload(db, config, runtime, directory, privacy="private")
+            editor.previous_features(db, runtime)
         finally:
             db.close()
 

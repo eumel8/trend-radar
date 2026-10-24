@@ -5,5 +5,6 @@
 !worker.py
 !config.toml
 !magazine.py
+!editor.py
 !assets/
 !assets/**

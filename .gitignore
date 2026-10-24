@@ -22,5 +22,6 @@ secrets.yaml
 secrets.yml
 secrets.*.yaml
 secrets.*.yml
+openai*.json
 .docker/
 *.log

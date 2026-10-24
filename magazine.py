@@ -71,6 +71,12 @@ def speech(text_value, path, voice, silent=False):
 
 
 def build_plan(episode, config):
+    generated = episode.get("generated_script")
+    if generated:
+        return [{"kind": "intro", **generated["intro"]}, *[
+            {"kind": "item", "item": item, "rank": index + 1, **scene}
+            for index, (item, scene) in enumerate(zip(episode["items"], generated["items"]))],
+                {"kind": "outro", **generated["outro"]}]
     items = episode["items"]
     plan = [{"kind": "intro", "heading": "DEIN NÄCHSTER\nYOUTUBE-RABBIT-HOLE.",
              "tag": "DER FORMAT-CHECK", "speech":
@@ -94,6 +100,10 @@ def render(directory, config, silent=False):
     directory = directory.resolve()
     episode_path = directory / "episode.json"
     episode = json.loads(episode_path.read_text())
+    if (directory / "ai-script.json").exists():
+        from editor import validate_script
+        episode["generated_script"] = validate_script(
+            json.loads((directory / "ai-script.json").read_text())["script"], episode)
     music = Path(config["video"]["music_file"])
     if not music.is_file():
         raise RuntimeError(f"Hintergrundmusik fehlt: {music}")
@@ -118,7 +128,7 @@ def render(directory, config, silent=False):
             filters = [zoom, "drawbox=x=0:y=0:w=iw:h=ih:color=black@0.16:t=fill",
                        f"drawbox=x=0:y=700:w=iw:h=380:color={BG}@0.92:t=fill",
                        f"drawbox=x=72:y=677:w=180:h=10:color={LIME}:t=fill"]
-            heading = textwrap.fill(scene["heading"], 45)
+            heading = textwrap.fill(scene["heading"], 40)
             filters += [text(directory, name + "head", heading, 76, 733, 57, bold=True),
                         text(directory, name + "channel", f"{item['series']}  /  {item['channel']}",
                              78, 904, 29, "0xd2dbed"),
@@ -137,7 +147,7 @@ def render(directory, config, silent=False):
                 f"drawbox=x=1500:y=0:w=30:h=1080:color={PINK}:t=fill",
                 text(directory, name + "bigde", "DE", "1560+12*sin(t*2)", 420, 165, BG, bold=True),
                 text(directory, name + "tag", scene["tag"], 92, 270, 33, LIME, bold=True),
-                text(directory, name + "headline", scene["heading"], "92+12*sin(t*1.4)", 375, 78, bold=True),
+                text(directory, name + "headline", textwrap.fill(scene["heading"], 26), "92+12*sin(t*1.4)", 375, 70, bold=True),
                 text(directory, name + "footer", "NEUE FORMATE. GROSSE IDEEN. KURZER CHECK.", 92, 870, 30, "0xc7d3e8"),
             ]
         filters += brand(directory, name)
@@ -169,10 +179,13 @@ def render(directory, config, silent=False):
          "-filter_complex", mix, "-map", "0:v:0", "-map", "[audio]", "-c:v", "copy",
          "-c:a", "aac", "-b:a", "192k", "-t", str(offset), "-movflags", "+faststart", str(output)], directory)
     (directory / "timeline.json").write_text(json.dumps(timeline, ensure_ascii=False, indent=2))
-    episode["title"] = f"Europa als Versteck?! 4 Formate für deine Watchlist | TrendsDE {episode['created'][:10]}" if len(episode["items"]) == 4 and any(i["id"] == "aqAHH0Mh11k" for i in episode["items"]) else episode["title"]
+    if not episode.get("generated_script"):
+        episode["title"] = f"Europa als Versteck?! 4 Formate für deine Watchlist | TrendsDE {episode['created'][:10]}" if len(episode["items"]) == 4 and any(i["id"] == "aqAHH0Mh11k" for i in episode["items"]) else episode["title"]
     episode["description"] += ("\nBildmaterial: animierte Original-Thumbnails der oben verlinkten Videos; "
                                "keine Ausschnitte aus den Originalvideos.\nMusik: Tidal Pulse (vom Betreiber bereitgestellt)."
-                               "\nModeration: synthetische deutsche Stimme.\n")
+                                "\nModeration: synthetische deutsche Stimme.\n")
+    if episode.get("script_provider") == "openai":
+        episode["description"] += "Moderationstext: KI-gestützt aus öffentlichen Videometadaten erstellt; keine Rezension der Originalvideos.\n"
     episode_path.write_text(json.dumps(episode, ensure_ascii=False, indent=2))
     (directory / "description.txt").write_text(episode["description"])
     (directory / "render.json").write_text(json.dumps({

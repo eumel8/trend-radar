@@ -21,8 +21,21 @@ voice = "de-DE-ConradNeural"
 slide_seconds = 12
 max_items = 5
 style = "magazine"
-edition = "magazine-v2"
+edition = "magazine-ai-v2"
 music_file = "/data/runtime/assets/tidal-pulse.m4a"
+
+[automation]
+enabled = true
+min_views = 1000
+candidate_limit = 12
+include_pattern = '(folge\s*[01]\b|episode\s*[01]\b|trailer|staffel|webserie|hide.?and.?seek|challenge|abenteuer)'
+exclude_pattern = '(gaming|gameplay|minecraft|brawl.?stars|let.?s.?play|hörspiel|hörbuch|ganzer film|trailer german deutsch|kinocheck|gamestar|pc games|enshrouded|permafrost|dune:|simulator|pokemon|zelda|outlast|dayz|the forest|retroflash|sitcomzeit|two and a half men|kindergeschichte)'
+exclude_description_pattern = '(fortnite|roblox|minecraft|brawl stars|für kinder|deutsch kids|gerüchte|skandal)'
+
+[ai]
+enabled = true
+model = "gpt-4.1-mini"
+fallback_templates = true
 
 [editorial.aqAHH0Mh11k]
 headline = "GANZ EUROPA ALS VERSTECK?!"

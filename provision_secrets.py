@@ -28,6 +28,8 @@ def main():
         raise SystemExit("YOUTUBE_API_KEY fehlt")
     put("trendsde-api", {"api-key": key.encode()})
     put("trendsde-oauth", {"token.json": (ROOT / "runtime/token.json").read_bytes()})
+    if os.environ.get("OPENAI_API_KEY"):
+        put("trendsde-openai", {"api-key": os.environ["OPENAI_API_KEY"].encode()})
     if not args.legacy_registry:
         print("API- und OAuth-Secrets eingerichtet.")
         return
