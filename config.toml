@@ -1,0 +1,49 @@
+title = "Deutschsprachiger YouTube-Trend-Radar"
+lookback_days = 30
+max_search_pages = 1
+queries = [
+  'Survival "Folge 1"',
+  'Outdoor "neue Serie"',
+  'Abenteuer "Folge 1"',
+  '"Hide and Seek" deutsch',
+  'Challenge "Staffel" deutsch',
+  'Comedy "Folge 1"',
+  'Webserie deutsch',
+  'Survival Trailer deutsch',
+]
+
+# Diese Beispielvideos sind vom Nutzer als deutschsprachig bestätigt.
+seed_video_ids = ["aqAHH0Mh11k", "zzu98KHAQvg", "yZE5Sxo1NiI", "rA1kK9Ge0ZI"]
+
+[video]
+title_prefix = "YouTube-Formate der Woche"
+voice = "de-DE-ConradNeural"
+slide_seconds = 12
+max_items = 5
+style = "magazine"
+edition = "magazine-v2"
+music_file = "/data/runtime/assets/tidal-pulse.m4a"
+
+[editorial.aqAHH0Mh11k]
+headline = "GANZ EUROPA ALS VERSTECK?!"
+tag = "JAGDFIEBER"
+speech = "Ganz Europa als Versteck? Andere suchen ihren Schlüssel. Bei Track Me Down wird direkt ein ganzer Kontinent zum Spielfeld. Need To Know schickt ein Hide-and-Seek-Format durch Europa. Die spannende Frage: Trägt die Jagd auch über mehrere Folgen? Wenn ihr Verfolgungs-Challenges mögt, gehört dieser Auftakt auf eure Liste."
+
+[editorial.zzu98KHAQvg]
+headline = "SUPPORT? ICH BIN DANN MAL WEG."
+tag = "BÜRO STATT BUSCH"
+speech = "Und jetzt das gefährlichste Gelände überhaupt: der IT-Support. Sabbatical statt Support heißt es bei der IT-Praxis Doktor Bauer von Let's Skip the Bla. Keine Wildnis, sondern Büro-Unterhaltung. Allein der Titel klingt nach einer Abwesenheitsnotiz, die wir gerne selbst verschicken würden. Unser Kontrastprogramm für alle, die schon bei einem klingelnden Telefon Überlebensinstinkte entwickeln."
+
+[editorial.yZE5Sxo1NiI]
+headline = "NORWEGEN. WILDNIS. LOS GEHT'S."
+tag = "RAUS AUS DER KOMFORTZONE"
+speech = "Vom Bürostuhl direkt in die norwegische Wildnis. Drei versus Woods startet mit der Frage: Bereit für die Wildnis? Wir wären erst mal bereit für einen Kaffee. Die erste Folge setzt auf Outdoor-Abenteuer in Norwegen. Für Survival-Fans ein Kandidat zum Reinschauen. Ob daraus euer nächster Serienmarathon wird, entscheidet ihr nach dem Auftakt."
+
+[editorial.rA1kK9Ge0ZI]
+headline = "KOLUMBIEN STATT KOMFORTZONE"
+tag = "ALLEIN GEGEN DIE NATUR"
+speech = "Norwegen war euch noch nicht weit genug weg? Vier Elements geht nach Kolumbien. Allein gegen die Natur lautet der Auftakt bei Das Leben des Brian. Der Titel verspricht ein Survival-Abenteuer fern der Komfortzone. Wir nehmen das Format auf unsere Watchlist. Und ihr sagt uns: Welcher dieser vier Starts verdient eure nächste freie Stunde?"
+
+[youtube]
+channel_id = "UCVaKIj-35B8WImm_fey9biA"
+privacy = "private"

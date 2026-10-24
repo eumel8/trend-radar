@@ -1,0 +1,36 @@
+# Only for the initial database import / maintenance. Not part of kustomization.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: trendsde-maintenance
+  namespace: trendsde
+spec:
+  automountServiceAccountToken: false
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+  containers:
+    - name: worker
+      image: ghcr.io/eumel8/trend-radar:main
+      imagePullPolicy: Always
+      command: [sleep, "3600"]
+      env:
+        - name: YOUTUBE_TOKEN_FILE
+          value: /credentials/token.json
+      volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: token
+          mountPath: /credentials
+          readOnly: true
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: trendsde-data
+    - name: token
+      secret:
+        secretName: trendsde-oauth
+        defaultMode: 0440

@@ -1,0 +1,9 @@
+*
+!Dockerfile
+!requirements.txt
+!radar.py
+!worker.py
+!config.toml
+!magazine.py
+!assets/
+!assets/**

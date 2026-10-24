@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2560" height="1440" viewBox="0 0 2560 1440" role="img" aria-label="TrendsDE Kanalbanner – Neue Formate. Große Ideen. Kurzer Check.">
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#1a253a" stroke-width="1"/></pattern>
+    <linearGradient id="glow" x2="1" y2="1"><stop stop-color="#203725"/><stop offset="1" stop-color="#0b1020"/></linearGradient>
+  </defs>
+  <rect width="2560" height="1440" fill="#0b1020"/>
+  <rect width="2560" height="1440" fill="url(#grid)"/>
+  <circle cx="2210" cy="320" r="510" fill="url(#glow)"/>
+  <path d="M-200 1210 260 760 570 960 1170 310" fill="none" stroke="#b6ff42" stroke-opacity=".09" stroke-width="105"/>
+  <path d="m2170 0-240 1440" stroke="#ff427a" stroke-width="25"/>
+  <path d="m2230 0-240 1440" stroke="#b6ff42" stroke-width="90"/>
+  <path d="m2390 0-240 1440" stroke="#b6ff42" stroke-opacity=".15" stroke-width="180"/>
+  <!-- All identity and text inside the centered 1546 x 423 device-safe area. -->
+  <g transform="translate(585 578)">
+    <rect width="230" height="260" rx="28" fill="#131e30"/>
+    <path d="M36 141 88 87l44 29 65-73" fill="none" stroke="#b6ff42" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="m157 43 40 0 0 40" fill="none" stroke="#b6ff42" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="34" y="186" width="161" height="11" rx="5" fill="#ff427a"/>
+    <text x="275" y="117" fill="white" font-family="DejaVu Sans" font-size="126" font-weight="bold" letter-spacing="-4">TRENDS</text>
+    <rect x="878" y="14" width="210" height="128" rx="12" fill="#b6ff42"/>
+    <text x="983" y="114" text-anchor="middle" fill="#0b1020" font-family="DejaVu Sans" font-size="110" font-weight="bold">DE</text>
+    <text x="281" y="192" fill="#d2dbed" font-family="DejaVu Sans" font-size="30" font-weight="bold" letter-spacing="1">NEUE FORMATE. GROSSE IDEEN. KURZER CHECK.</text>
+    <text x="281" y="246" fill="#b6ff42" font-family="DejaVu Sans" font-size="25" letter-spacing="2">DEUTSCHSPRACHIGE YOUTUBE-FORMATE ENTDECKEN</text>
+  </g>
+  <rect x="0" y="1408" width="2560" height="12" fill="#ff427a"/>
+  <rect x="0" y="1420" width="2560" height="20" fill="#b6ff42"/>
+</svg>
