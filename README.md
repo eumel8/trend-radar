@@ -241,7 +241,8 @@ verschachtelten Workflow nicht aus.
 - Pull Requests nach `main`: Tests mit echtem FFmpeg-Render und Container-Build,
   ohne Image-Push und ohne YouTube-Zugangsdaten.
 - Push nach `main`: Tests, Build und Push nach **`ghcr.io/eumel8/trend-radar`**.
-- Tags `v*`, z. B. `v1.2.0`: zusätzlicher Build mit Semver-Tags `1.2.0` und `1.2`.
+- Versions-Tags mit oder ohne `v`, z. B. `0.0.1` oder `v1.2.0`: zusätzlicher Build
+  mit Semver-Image-Tags wie `0.0.1` und `0.0` beziehungsweise `1.2.0` und `1.2`.
 - Manueller Start über GitHub Actions ist ebenfalls möglich.
 - Image-Tags: `main`, `latest` (nur main), `sha-<vollständiger Commit-SHA>` und
   gegebenenfalls Release-Tags. Zielplattform ist `linux/amd64`, passend zum Cluster.
